@@ -19,7 +19,16 @@ var con = mysql.createConnection({
 	router.get("/customers/", (req, res) => {
 	
 		con.query("SELECT * FROM customers", function (err, result, fields) {	
-		res.status(200).send(result);
+		
+		 res.status(200).send(result);
+		});
+		
+	});
+	router.get("/customers/ejs", (req, res) => {
+	
+		con.query("SELECT * FROM customers", function (err, result, fields) {	
+		res.render('index',{data: result});
+		
 		});
 		
 	});
@@ -34,6 +43,8 @@ var con = mysql.createConnection({
 		});
 		
     });
+	
+	
 	
 	
 	router.get("/customers/:id/:rid", function (req, res) {  
@@ -95,12 +106,49 @@ var con = mysql.createConnection({
 		
 	
 	});
- 
 	
+	
+	router.delete("/delete/:id", function (req, res) {
+	
+		var id=req.params.id;
+       
+		
+		
+		let sql = "DELETE FROM `customers` where customerNumber = ?";
+		let data = [id]
+		
+		con.query(sql,data, function (err, result, fields) {
+	        if(result.affectedRows){
+				res.status(200).send('Success');
+			}
+			else{
+				res.status(404).send('No row effected');	
+			}
+    
+		});
+		
+		
+		
+	
+	});
+	
+	router.get("/creditLimit/:limit/", function (req, res) {  
+		var limited = req.params.limit;
+		let statuscode=null;
+		let sql = "SELECT * FROM (SELECT creditLimit FROM customers ORDER BY creditLimit DESC LIMIT "+limited+") AS Emp ORDER BY creditLimit LIMIT 1";
+		
+		
+		con.query(sql, function (err, result, fields) {
+		statuscode='The '+limited+' higest credit Limit is '+result[0].creditLimit;
+			res.status(200).send(statuscode);
+    
+		});
+    });
+ 	
  
- router.get("*", (req, res) => {
-	 res.status(404).send({ message: 'invalid information'});
-	 })
+	router.get("*", (req, res) => {
+		res.status(404).send({ message: 'invalid information'});
+	})
  
    
 module.exports = router;
