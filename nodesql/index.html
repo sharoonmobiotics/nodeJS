@@ -1,0 +1,56 @@
+
+<!-- <html lang="en"> -->
+<!-- <head> -->
+    <!-- <meta charset="UTF-8"> -->
+    <!-- <title></title> -->
+    <!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script> -->
+<!-- </head> -->
+<!-- <body> -->
+    <!-- <script type="text/javascript"> -->
+        <!-- $.getJSON('http://localhost:3000/customers').done(function(data) { -->
+            <!-- console.log(data) -->
+        <!-- }) -->
+    <!-- </script> -->
+<!-- </body> -->
+<!-- </html> -->
+
+<html>
+<body>
+<table id="table" border="1px solid black">
+   <tr>
+       <th colspan="13"> CUSTOMER DETAILS</th>
+   </tr>
+   <tr>
+       <th>Customer number</th>
+       <th>Customer name</th>
+       <th>Customer Lastname</th>
+       <th>Customer Firstname</th>
+       <th>Phone</th>
+       <th>Address 1</th>
+       <th>Address 2</th>
+       <th>City</th>
+       <th>State</th>
+       <th>Postal code</th>
+       <th>Country</th>
+       <th>Sales Response Emp Number</th>
+       <th>Credit Limit</th>
+   </tr>
+</table>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+
+
+fetch('http://localhost:3000/customers').then((res) => {
+  return res.json();
+}).then((data)=> {
+
+  var tableData = '';
+       $.each(data, function (i, item) {
+           tableData += '<tr><td>' + item.customerNumber + '</td><td>' + item.customerName + '</td><td>' + item.contactLastName + '</td><td>' + item.contactFirstName + '</td><td>' + item.phone + '</td><td>' + item.addressLine1 + '</td><td>' + item.addressLine2 + '</td><td>' + item.city + '</td><td>' + item.state + '</td><td>' + item.postalCode + '</td><td>' + item.country + '</td><td>' + item.salesRepEmployeeNumber + '</td><td>' + item.creditLimit + '</td></tr>';
+       });
+       $('#table').append(tableData);
+  
+})
+</script>
