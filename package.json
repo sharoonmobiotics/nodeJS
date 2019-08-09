@@ -13,6 +13,7 @@
     "ejs": "^2.6.2",
     "express": "^4.17.1",
     "express-formidable": "^1.2.0",
+    "mongodb": "^3.3.0-beta2",
     "mysql": "^2.17.1"
   },
   "devDependencies": {
