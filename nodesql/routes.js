@@ -10,10 +10,9 @@ var con = mysql.createConnection({
   database: 'customers'
 })
 
-	con.connect(function(err) {
-		if (err) throw err;
+con.connect(function(err) {
+	if (err) throw err;
 		console.log("success db");
-	
 	});
 
 	router.get("/customers/", (req, res) => {
@@ -27,7 +26,7 @@ var con = mysql.createConnection({
 	router.get("/customers/ejs", (req, res) => {
 	
 		con.query("SELECT * FROM customers", function (err, result, fields) {	
-		res.render('index',{data: result});
+		res.render('index', {data: result});
 		
 		});
 		
@@ -44,17 +43,14 @@ var con = mysql.createConnection({
 		
     });
 	
-	
-	
-	
 	router.get("/customers/:id/:rid", function (req, res) {  
 		var id = req.params.id;
 		var rid = req.params.rid;
 		
 		let sql = "SELECT * FROM customers where customerNumber between ? and ?";
-		let data = [id,rid]
+		let data = [id, rid]
 		
-		con.query(sql,data, function (err, result, fields) {
+		con.query(sql, data, function (err, result, fields) {
 	
 			res.status(200).send({ customers: result});
     
@@ -67,9 +63,9 @@ var con = mysql.createConnection({
 		var name2 = req.params.name2;
 		
 		let sql = "SELECT * FROM customers where country in (? , ?)";
-		let data = [name1,name2]
+		let data = [name1, name2]
 		
-		con.query(sql,data, function (err, result, fields) {
+		con.query(sql, data, function (err, result, fields) {
 		res.status(200).send({ customers: result});
 		});
 
@@ -98,22 +94,15 @@ var con = mysql.createConnection({
 		
 		con.query(sql, function (err, result) {
 				
-			res.status(200).send({ customers: result});
+			res.status(200).send({ customers: result });
   
 		});
-		
-		
-		
 	
 	});
-	
 	
 	router.delete("/delete/:id", function (req, res) {
 	
 		var id=req.params.id;
-       
-		
-		
 		let sql = "DELETE FROM `customers` where customerNumber = ?";
 		let data = [id]
 		
@@ -127,16 +116,12 @@ var con = mysql.createConnection({
     
 		});
 		
-		
-		
-	
 	});
 	
 	router.get("/creditLimit/:limit/", function (req, res) {  
 		var limited = req.params.limit;
 		let statuscode=null;
 		let sql = "SELECT * FROM (SELECT creditLimit FROM customers ORDER BY creditLimit DESC LIMIT "+limited+") AS Emp ORDER BY creditLimit LIMIT 1";
-		
 		
 		con.query(sql, function (err, result, fields) {
 		statuscode='The '+limited+' higest credit Limit is '+result[0].creditLimit;
@@ -152,5 +137,3 @@ var con = mysql.createConnection({
  
    
 module.exports = router;
-
-

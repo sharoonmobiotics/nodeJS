@@ -1,20 +1,19 @@
 var express = require("express");
 var router = express.Router();
 
+var assert = require('assert');
 
-var mysql = require('mysql')
-var con = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'customers'
-})
-
-	con.connect(function(err) {
-		if (err) throw err;
-		console.log("success db");
 	
-	});
+var mongo = require('mongodb').MongoClient
+
+var url = 'mongodb://localhost:27018/test';  //if (err) throw err
+
+  //  if (err) throw err
+
+
+  
+
+
 
 	router.get("/customers/", (req, res) => {
 	
@@ -78,32 +77,22 @@ var con = mysql.createConnection({
 
 	router.post("/customers/submit", function (req, res) {
 	
-		var obj=req.fields;
+		
        
-		var arr1 = [];
-		var arr2 = [];
-		for (var key in obj) {
-			if (obj.hasOwnProperty(key)) {
-			arr1.push(key);
-			arr2.push(obj[key]);
-			}
+		var item = {
+			title: req.fields.title,
+			content: req.fields.content,
+			author: req.fields.author
 		};
-		
-		var key = arr1.join(",");
-		var value = arr2.join("','");
-		
-		console.log("value", value)
 
-		let sql = "INSERT INTO customers ("+key+") VALUES ('"+value+"')";
-		
-		con.query(sql, function (err, result) {
-				
-			res.status(200).send({ customers: result});
-  
+		mongo.connect(url, function(err, db) {
+			assert.equal(null, err);
+			db.collection('user-data').insertOne(item, function(err, result) {
+				assert.equal(null, err);
+				console.log('Item inserted');
+				db.close();
+			});
 		});
-		
-		
-		
 	
 	});
 	

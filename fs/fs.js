@@ -1,9 +1,8 @@
 const fs = require('fs');
 
-
-function read(file,cb){
+function read(file, cb){
 var content;
-fs.readFile(file,'utf8', function read(err, data) {
+fs.readFile(file, 'utf8', function read(err, data) {
     if (err) {
         throw err;
     }
@@ -12,14 +11,14 @@ fs.readFile(file,'utf8', function read(err, data) {
     cb();
 }); 
 }
-function append(file,cb){
+function append(file, cb){
 fs.appendFile(file, '+ this is append data', function (err) {
   if (err) throw err;
   console.log('New content is Appended');
   cb();
 });
 }
-function write(file,cb){
+function write(file, cb){
 fs.writeFile(file, "this is written data ", function(err) {
     if(err) {
         return console.log(err);

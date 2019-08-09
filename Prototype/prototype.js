@@ -42,5 +42,5 @@ console.log("Values, a = "+x + " b = " +y);
 
 console.log("sum Result = ", result.sum());
 console.log("sub Result = ", result.sub());
-console.log("mul Result = ",result.mul());
+console.log("mul Result = ", result.mul());
 console.log("div Result = ", result.div());

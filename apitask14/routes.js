@@ -1,46 +1,36 @@
 var appRouter = function (app) {
 
-   
-
-  
-  app.get("/student", function (req, res) {
+	app.get("/student", function (req, res) {
 	
-	if (req.headers.authorization!="mobiotics") {
-     return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
-	}
-	else{	
-	res.status(200).send(students);
-	}
- });
+		if (req.headers.authorization!="mobiotics") {
+     		return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
+		}else{	
+			res.status(200).send(students);
+		}
+ 	});
  
 	
     app.get("/student/:id", function (req, res) {  
 		if (req.headers.authorization!="mobiotics") {
-		return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
-		}
-		else{
-		var id = req.params.id;
-		let info = students.data;
-   
-		let arr = info.filter((d)=> {
-			if(d.ID == id) {
-			return d;
-			}
-		});
-   
+			return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
+		}else{
+			var id = req.params.id;
+			let info = students.data;
+
+			let arr = info.filter((d)=> {
+				if(d.ID == id) {
+					return d;
+				}
+			});
 		res.status(200).send(arr);
 		}
     });
 	
-	  
-
     app.get("/students", function (req, res) {  
 	
 		if (req.headers.authorization!="mobiotics") {
-		return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
-		}
-		else{
-
+			return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
+		}else{
 			var name = req.query.name;
 			let info = students.data;
    
@@ -49,43 +39,33 @@ var appRouter = function (app) {
 				return d;
 				}
 			});
-   
-			res.status(200).send(arr);
-		}
-    });
-	app.get("/student/:minage/:maxage", function (req, res) {  
-  
-		if (req.headers.authorization!="mobiotics") {
-		return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
-		}
-		else{
-		
-			var maxage = req.params.maxage;
-			var minage = req.params.minage;
-		
-			let info = students.data;
-   
-			let arr = info.filter((d)=> {
-				if(d.Age >= minage && d.Age < maxage) {
-				return d;
-				}
-			});
-   
 			res.status(200).send(arr);
 		}
 	});
 	
+	app.get("/student/:minage/:maxage", function (req, res) {  
+		if (req.headers.authorization!="mobiotics") {
+			return res.status(401).send({ message: 'Please make sure your request has an Authorization header...' });
+		}else{
+			var maxage = req.params.maxage;
+			var minage = req.params.minage;
+			let info = students.data;
 
- 
- 
- 
- app.get("*", (req, res) => {
-	 res.status(404).send({ message: 'invalid information'});
-	 
-	 })
+			let arr = info.filter((d)=> {
+				if(d.Age >= minage && d.Age < maxage) {
+					return d;
+				}
+			});
+			res.status(200).send(arr);
+		}
+	});
+
+	app.get("*", (req, res) => {
+		res.status(404).send({ message: 'invalid information'});
+	})
  
 }
-     var students ={
+var students ={
   "data": [
     {
       "ID": "1",

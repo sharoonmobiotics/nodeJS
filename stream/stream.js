@@ -5,15 +5,15 @@ var fs = require("fs");
 function readStream(cb){
 var data = '';
 
-var readerStream = fs.createReadStream('sample.txt','UTF8');
+var readerStream = fs.createReadStream('sample.txt', 'UTF8');
 
 
 readerStream.on('data', function(chunk) {
    data += chunk;
 });
 
-readerStream.on('end',function() {
-   console.log('Writtrn data : ',data);
+readerStream.on('end', function() {
+   console.log('Writtrn data : ', data);
    cb();
 });
 
@@ -24,11 +24,11 @@ readerStream.on('error', function(err) {
 
 }
 
-function writeStream(data,cb){
+function writeStream(data, cb){
 
 var writerStream = fs.createWriteStream('sample.txt');
 
-writerStream.write(data,'UTF8');
+writerStream.write(data, 'UTF8');
 
 writerStream.end();
 writerStream.on('finish', function() {
@@ -42,7 +42,7 @@ writerStream.on('error', function(err) {
 
 }
 
-writeStream( 'helloo there!' ,function() {
+writeStream( 'helloo there!', function() {
     readStream( function() {
         
     });
